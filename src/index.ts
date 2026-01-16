@@ -23,7 +23,7 @@ app.get('/get-skill', async (req: Request, res: Response) => {
     return;
   }
 
-  const signedUrl = await generateSignedUrl(name, 'GET');
+  const signedUrl = await generateSignedUrl(name);
   res.json({ name, signedUrl });
 });
 
