@@ -47,7 +47,7 @@ app.get('/get-skill', async (req: Request, res: Response) => {
     res.status(402).json({
       error: 'Payment Required Response',
       x402Version: 1,
-      paymentRequirements
+      accepts: [paymentRequirements]
     });
     return;
   }
