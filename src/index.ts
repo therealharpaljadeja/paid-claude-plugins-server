@@ -13,7 +13,7 @@ const SELLER_WALLET = process.env.SELLER_WALLET || '';
 const USDCE_CONTRACT = '0xc01efAaF7C5C61bEbFAeb358E1161b537b8bC0e0';
 const NETWORK = process.env.CRONOS_NETWORK || 'cronos-testnet';
 const PAYMENT_AMOUNT = process.env.PAYMENT_AMOUNT || '1000000'; // Default 1 USDC (6 decimals)
-
+const NETWORK_ID = process.env.NETWORK_ID || '338';
 app.use(express.json());
 
 app.get('/get-skill', async (req: Request, res: Response) => {
@@ -34,13 +34,14 @@ app.get('/get-skill', async (req: Request, res: Response) => {
 
   const paymentRequirements = {
     scheme: 'exact',
-    network: NETWORK,
+    network: { name: NETWORK, id: NETWORK_ID },
     payTo: SELLER_WALLET,
     asset: USDCE_CONTRACT,
     description: `Access to skill: ${name}`,
     mimeType: 'application/json',
     maxAmountRequired: PAYMENT_AMOUNT,
     maxTimeoutSeconds: 300
+
   };
 
   if (!paymentHeader) {
