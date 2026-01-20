@@ -32,7 +32,7 @@ app.get('/get-skill', async (req: Request, res: Response) => {
 
   const paymentHeader = req.headers['x-payment'] as string || req.body?.paymentHeader;
 
-  const paymentDetails = {
+  const paymentRequirements = {
     scheme: 'exact',
     network: NETWORK,
     payTo: SELLER_WALLET,
@@ -47,7 +47,7 @@ app.get('/get-skill', async (req: Request, res: Response) => {
     res.status(402).json({
       error: 'Payment Required Response',
       x402Version: 1,
-      accepts: paymentDetails
+      paymentRequirements
     });
     return;
   }
@@ -56,7 +56,7 @@ app.get('/get-skill', async (req: Request, res: Response) => {
     const requestBody = {
       x402Version: 1,
       paymentHeader: paymentHeader,
-      accepts: paymentDetails
+      paymentRequirements
     };
 
     const verifyRes = await axios.post(`${FACILITATOR_URL}/verify`, requestBody, {
